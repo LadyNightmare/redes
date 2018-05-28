@@ -2,17 +2,28 @@ package redes;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
+
+import org.omg.Messaging.SyncScopeHelper;
 
 public class Client {
 
-	static final int serverPort = 12345;
+	static String IP;
+	static int serverPort;
 
 	public static void main(String[] args) throws IOException {
 		
-		InetAddress serverAddr = InetAddress.getByName("");
+		Scanner sc = new Scanner(System.in).useDelimiter("\\s");
+		
+		System.out.println("java Client ");
+		
+		IP = sc.next();
+		serverPort = sc.nextInt();
+		
+		InetAddress serverAddr = InetAddress.getByName(IP);
 
 		try {
-
+			
 			Socket sockfd = new Socket(serverAddr, serverPort);
 			System.out.println("Local connection: " + serverAddr);
 
@@ -20,14 +31,20 @@ public class Client {
 			PrintWriter out = new PrintWriter(sockfd.getOutputStream(), true);
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			String userInput;
+			
+			System.out.println(in.readLine());
 
 			while ((userInput = stdIn.readLine()) != null) {
 
-				if (userInput.equals(".")) {
+				if (userInput.equals("0")) {
 
 					break;
 
 				}
+				
+				String offset = stdIn.readLine();
+				out.println(offset+"\r\n");
+				userInput = stdIn.readLine();
 
 				out.println(userInput);
 				System.out.println("echo: " + in.readLine());
@@ -38,6 +55,7 @@ public class Client {
 			in.close();
 			stdIn.close();
 			sockfd.close();
+			sc.close();
 
 		} catch (UnknownHostException e) {
 
