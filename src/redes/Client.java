@@ -40,6 +40,7 @@ public class Client {
 				if (userInput.equals("0")) {
 					
 					out.println(userInput);
+					System.out.println(in.readLine());
 
 					break;
 

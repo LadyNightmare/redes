@@ -91,7 +91,7 @@ public class Server {
 					
 					if (line != null) {
 						
-						if (line == "0") {
+						if (line.equals("0")) {
 							
 							out.println("ok.");
 							salir = true;
