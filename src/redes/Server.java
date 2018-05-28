@@ -76,25 +76,39 @@ public class Server {
 				
 				//We send the message to the connected client
 				
-				out.println("Welcome to the cryptography server");
+				out.println("Welcome to the cryptography server. Enter a number"
+						+ " to codify your text and your text.");
 				
 				boolean salir = false;
+				
+				String word;
 				
 				//if there's nothing left to print, we close the connection
 
 				while (!salir) {
 					
-					int value = Integer.parseInt(in.readLine());
-					if (value != 0) {
-						line = in.readLine();
-						out.println(crypto(line, value));
-
-					} else {
+					line = in.readLine();
+					
+					if (line != null) {
 						
-						out.println("ok.");
+						if (line == "0") {
+							
+							out.println("ok.");
+							salir = true;
+							
+						} else {
+							
+							word = in.readLine();
+						
+							out.println(crypto(word,Integer.parseInt(line)));
+						
+						}
+						
+					}
+
 						salir = true;
 
-					}
+					
 
 				}
 

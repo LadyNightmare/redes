@@ -33,21 +33,25 @@ public class Client {
 			String userInput;
 			
 			System.out.println(in.readLine());
+			String number;
 
 			while ((userInput = stdIn.readLine()) != null) {
 
 				if (userInput.equals("0")) {
+					
+					out.println(userInput);
 
 					break;
 
+				} else {
+					
+					
+					out.println(userInput);
+					userInput = stdIn.readLine();
+					out.println(userInput);
+					System.out.println("echo: " + in.readLine());
+					
 				}
-				
-				String offset = stdIn.readLine();
-				out.println(offset+"\r\n");
-				userInput = stdIn.readLine();
-
-				out.println(userInput);
-				System.out.println("echo: " + in.readLine());
 
 			}
 
@@ -56,6 +60,7 @@ public class Client {
 			stdIn.close();
 			sockfd.close();
 			sc.close();
+
 
 		} catch (UnknownHostException e) {
 
