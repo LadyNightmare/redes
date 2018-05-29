@@ -20,6 +20,8 @@ public class Client {
 		IP = sc.next();
 		serverPort = sc.nextInt();
 		
+		String incoming;
+		
 		InetAddress serverAddr = InetAddress.getByName(IP);
 
 		try {
@@ -32,6 +34,8 @@ public class Client {
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			String userInput;
 			
+			System.out.println("Connected to " + IP + ":" + serverPort);
+			
 			System.out.println(in.readLine());
 
 			while ((userInput = stdIn.readLine()) != null) {
@@ -39,6 +43,7 @@ public class Client {
 				if (userInput.equals("0")) {
 					
 					out.println(userInput);
+					System.out.println("Waiting for a response...");
 					System.out.println(in.readLine());
 
 					break;
@@ -49,12 +54,29 @@ public class Client {
 					out.println(userInput);
 					userInput = stdIn.readLine();
 					out.println(userInput);
-					System.out.println("echo: " + in.readLine());
+					System.out.println("Waiting for a response...");
+					incoming = in.readLine();
+					
+					if(incoming == null) {
+						
+						userInput = null;
+						
+						out.close();
+						in.close();
+						stdIn.close();
+						sockfd.close();
+						sc.close();
+						
+					} else {
+						
+					System.out.println("echo: " + incoming);
+					
+					}
 					
 				}
 
 			}
-
+			
 			out.close();
 			in.close();
 			stdIn.close();
@@ -67,6 +89,12 @@ public class Client {
 			System.err.println("Unknown: " + serverAddr);
 			System.exit(1);
 
+		} catch (IOException e) {
+			
+			System.err.println("Server has closed.");
+			System.exit(1);
+
+			
 		}
 
 	}

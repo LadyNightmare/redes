@@ -60,9 +60,12 @@ public class Server {
 			//Creating the server socket for the communication
 			
 			ServerSocket sockfd = new ServerSocket(serverPort);
+			sockfd.setReceiveBufferSize(1);
 			System.out.println("Server initialization..." + sockfd);
+			System.out.println("Waiting for a new client...");
 
 			while (true) {
+				
 
 				//Creating the socket to accept the connection
 				
@@ -97,6 +100,7 @@ public class Server {
 							
 							out.println("ok.");
 							salir = true;
+							System.out.println("Waiting for a new client...");
 							
 						} else {
 							
