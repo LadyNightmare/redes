@@ -87,6 +87,8 @@ public class Server {
 
 				while (!salir) {
 					
+					newsockfd.setSoTimeout(40000);
+					
 					line = in.readLine();
 					
 					if (line != null) {
@@ -105,8 +107,6 @@ public class Server {
 						}
 						
 					}
-
-						salir = true;
 
 					
 

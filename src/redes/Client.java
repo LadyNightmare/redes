@@ -33,7 +33,6 @@ public class Client {
 			String userInput;
 			
 			System.out.println(in.readLine());
-			String number;
 
 			while ((userInput = stdIn.readLine()) != null) {
 
