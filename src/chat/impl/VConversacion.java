@@ -31,7 +31,7 @@ import chat.ifaces.Vista;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class VConversacion extends javax.swing.JPanel{
+public class VConversacion extends javax.swing.JPanel {
 	
 	private JTextPane dialogo;
 	private JPanel jPanel1;
@@ -44,8 +44,7 @@ public class VConversacion extends javax.swing.JPanel{
 	
 	private Controlador c;
 	
-	public VConversacion(String nombre)
-	{
+	public VConversacion(String nombre) {
 		super();
 		this.nombre = nombre;
 		initGUI();
@@ -63,8 +62,7 @@ public class VConversacion extends javax.swing.JPanel{
 		frame.setVisible(true);
 	}
 	
-	private void addStyles(StyledDocument d)
-	{
+	private void addStyles(StyledDocument d) {
 		Style def = StyleContext.getDefaultStyleContext().
 	            getStyle(StyleContext.DEFAULT_STYLE);
 
@@ -120,13 +118,11 @@ public class VConversacion extends javax.swing.JPanel{
 		}
 	}
 	
-	public void setControlador(Controlador c)
-	{
+	public void setControlador(Controlador c) {
 		this.c = c;
-		ActionListener limpiar = new ActionListener(){
+		ActionListener limpiar = new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
+			public void actionPerformed(ActionEvent arg0) {
 				entrada.setText("");
 			}
 		};
@@ -139,22 +135,18 @@ public class VConversacion extends javax.swing.JPanel{
 		entrada.addActionListener(c);
 	}
 	
-	public void mostrarMensaje(String msg, String estilo)
-	{
+	public void mostrarMensaje(String msg, String estilo) {
 		//dialogo.setForeground(Color.GREEN);
-		try
-		{
+		try {
 			doc.insertString(doc.getLength(), msg+"\n", doc.getStyle(estilo));
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			
 		}
 		//dialogo.append(msg+"\n");
 	}
 	
-	public String getMensajeEntrada()
-	{
+	public String getMensajeEntrada() {
 		return entrada.getText();
 	}
 

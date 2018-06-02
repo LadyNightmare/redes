@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import javax.print.attribute.SetOfIntegerSyntax;
@@ -55,45 +56,79 @@ public class ComunicacionImpl implements Comunicacion {
 
 	@Override
 	public void runReceptor() {
+		
+		while(true) {
+			
+			byte[] myData = new byte[1024];
+			
+			DatagramPacket data = new DatagramPacket(myData, myData.length);
+			
+			try {
 				
-		DatagramPacket data = new DatagramPacket(new byte[1024], 1024);
-		
-		try {
+				multiSock.receive(data);
+				
+			} catch (IOException e) {
+				
+				System.out.println(e.getMessage());
+				
+			}
 			
-			multiSock.receive(data);
-			c.mostrarMensaje(multiSock.getLocalSocketAddress(), userAlias, data.toString());
+			String fullMsg, username;
 			
-		} catch (SocketException e) {
+			String[] message;
+			InetSocketAddress IP;
 			
-			System.out.println(e.getMessage());
+			fullMsg = new String(data.getData(), StandardCharsets.UTF_8);
+			message = fullMsg.split("!");
 			
-		} catch (IOException e) {
+			username = message[1];
 			
-			System.out.println(e.getMessage());
+			try {
+				
+				if (InetAddress.getByName(message[0]).isMulticastAddress()) {
+					
+					IP = new InetSocketAddress(InetAddress.getByName(message[0]), data.getPort());
+					
+				} else {
+					
+					IP = new InetSocketAddress(data.getAddress(), data.getPort());
+					
+				}
+				
+				StringBuilder sb = new StringBuilder();
+				
+				for (int i = 2; i < message.length; ++i) {
+					
+					sb.append(message[i]);
+					
+				}
+				
+				if (!username.equals(userAlias)) {
+					
+					c.mostrarMensaje(IP, username, sb.toString());
+					
+				}
+				
+			} catch (Exception e) {
+				
+				System.out.println(e.getMessage());
+				
+			}
 			
-		}
-		
-		
-		
+		}		
 		
 	}
 
 	@Override
 	public void envia(InetSocketAddress sa, String mensaje) {		
 		
-		//String input = JOptionPane.showInputDialog("Insert your words.\n");
-				
-		//byte[] word = input.getBytes();
+		byte[] myData = mensaje.getBytes();
 		
-		DatagramPacket data = new DatagramPacket(mensaje.getBytes(), mensaje.length(), multiSock.getInetAddress(), multiSock.getLocalPort());
+		DatagramPacket data = new DatagramPacket(myData, myData.length, sa.getAddress(), sa.getPort());
 		
 		try {
 			
 			multiSock.send(data);
-			
-		} catch (SocketException e) {
-			
-			System.out.println(e.getMessage());
 			
 		} catch (IOException e) {
 			

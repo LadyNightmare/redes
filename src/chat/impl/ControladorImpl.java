@@ -16,8 +16,7 @@ import chat.ifaces.Controlador;
 import chat.ifaces.Vista;
 import chat.impl.DialogoPuerto.PuertoAlias;
 
-public class ControladorImpl implements Controlador
-{
+public class ControladorImpl implements Controlador {
 	private Vista v;
 	private Comunicacion c;
 	private Map<String,InetSocketAddress> conversaciones;
@@ -95,11 +94,9 @@ public class ControladorImpl implements Controlador
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event)
-	{
+	public void actionPerformed(ActionEvent event) {
 		String ac = event.getActionCommand();
-		if (ac.equals(NUEVO))
-		{
+		if (ac.equals(NUEVO)) {
 			// Pedir la IP y el puerto al usuario mediante una ventana modal
 			InetSocketAddress sa = v.getIPPuerto();
 			if (sa == null)
@@ -132,8 +129,7 @@ public class ControladorImpl implements Controlador
 			v.mostrarMensaje(nombre, alias+SEP+mensaje, Vista.PROPIO);
 			c.envia(conversaciones.get(nombre), mensaje);
 		}
-		else if (ac.startsWith(PREFIJO_CERRAR))
-		{
+		else if (ac.startsWith(PREFIJO_CERRAR)) {
 			String nombre = ac.substring(PREFIJO_CERRAR.length());
 			InetSocketAddress sa = conversaciones.get(nombre);
 			
