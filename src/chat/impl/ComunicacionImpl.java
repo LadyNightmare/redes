@@ -120,9 +120,23 @@ public class ComunicacionImpl implements Comunicacion {
 	}
 
 	@Override
-	public void envia(InetSocketAddress sa, String mensaje) {		
+	public void envia(InetSocketAddress sa, String mensaje) {
 		
-		byte[] myData = mensaje.getBytes();
+		String formattedMsg;
+		
+		if(sa.getAddress().isMulticastAddress()) {
+			
+			formattedMsg = sa.getAddress() + "!" + userAlias + "!" + mensaje;
+			
+		} else {
+			
+			formattedMsg = "!" + userAlias + "!" + mensaje;
+			
+		}
+		
+		
+		
+		byte[] myData = formattedMsg.getBytes();
 		
 		DatagramPacket data = new DatagramPacket(myData, myData.length, sa.getAddress(), sa.getPort());
 		
